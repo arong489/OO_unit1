@@ -125,7 +125,9 @@ public class MyParser {
             return tmp.calculate();
         } else if (factorString.charAt(0) == '&') {
             lexer.next();
-            return (Expr)parseExpr().Derivation(factorString.substring(1));
+            Expr temp = (Expr)parseExpr().Derivation(factorString.substring(1));
+            lexer.next();
+            return temp;
         } else if (args != null && args.containsKey(factorString)) {
             lexer.next();
             return new Expr(args.get(factorString));
