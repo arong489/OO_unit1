@@ -8,7 +8,7 @@
 
 ### uml图&架构
 
-![enter image description here](.\diagram\diagram.svg)
+![enter image description here](diagram\diagram.svg)
 
 hw1是最惨痛的一次(~~因为没交上~~)，主要是对递归下降不熟悉，但是hw1也奠定了我整个三次作业的基础，虽说hw3重构了，但是基本框架没变，只是细化了数据存储部分
 
@@ -53,7 +53,7 @@ Expr的扇出较高，稳定性不大好(因为依赖了Term)
 
 ### uml图&架构分析
 
-![enter image description here](.\diagram\diagram2.svg)
+![enter image description here](diagram\diagram2.svg)
 
 在前者的基础上迭代增加了自定义函数因子和三角函数因子
 
@@ -100,7 +100,7 @@ Expr的扇出较高，稳定性不大好(因为依赖了Term)
 
 ### uml图&框架分析
 
-![enter image description here](.\diagram\diagram3.svg)
+![enter image description here](diagram\diagram3.svg)
 
 ~~狠狠重构了~~
 原因前面已经说了
