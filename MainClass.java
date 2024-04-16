@@ -9,14 +9,14 @@ public class MainClass {
         while (n != 0) {
             do {
                 function = scanner.nextLine();
-            } while (function.equals(""));
+            } while (function.trim().equals(""));
             Funsave.registerFunction(inputTranslate(new StringBuilder(function.trim())));
             n--;
         }
         String expression;
         do {
             expression = scanner.nextLine();
-        } while (expression.equals(""));
+        } while (expression.trim().equals(""));
         expression = inputTranslate(new StringBuilder(expression.trim()));
         scanner.close();
         // build key object

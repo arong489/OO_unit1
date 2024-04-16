@@ -6,11 +6,12 @@ public class Funcall {
     private String name;
     private int cur = 0;
     private HashMap<String, Expr> args;
-    private boolean argsfull = false;
+    private boolean argsfull;
 
     public Funcall(String name) {
         this.name = name;
         args = new HashMap<String, Expr>();
+        this.argsfull = Funsave.getFparam(this.name)[0].equals("");
     }
     
     public void loadFactor(Expr...exprs) {

@@ -1,0 +1,176 @@
+@startuml diagram2
+
++class Mainclass {
+    + {{static}} void main()
+    + {{static}} String inputTranslate(StringBuilde)
+}
++class Funsave {
+    - {static} HashMap<String, String> content
+    - {static} HashMap<String, String[]> fparam
+
+    + {static} void registerFunction(String)
+    + {static} String getContent(String)
+    + {static} String[] getFparam(String)
+    + {static} boolean isFunctionName(String)
+}
++class Funcall {
+    - String name
+    - int cur
+    - HashMap<String, Expr> args
+    - boolean argsfull
+    + Funcall(String)
+    + void loadFactor(Expr...)
+    + Expr calculate()
+    + boolean fullargs()
+}
++class MyParser {
+    - final Lexer lexer
+    - HashMap<String, Expr> args
+    __
+    ..constructor..
+    + MyParser(Lexer)
+    + MyParser(Lexer, HashMap<String, Expr>)
+    ..parser manners..
+    + Expr parseExpr()
+    - Gneral parseMulti()
+    + Gneral parsePowAndMinus()
+    - Gneral parseFactor()
+}
++class Lexer {
+    - final String input;
+    - int pos = 0;
+    - String curToken;
+    __
+    ..constructor..
+    + Lexer(String)
+    ..inner lexer..
+    - String getNumber()
+    - String getVarOrFunc()
+    - String getTrigono()
+    ....
+    + void next()
+    + String peek()
+}
+package expr {
+    +interface Factor {
+        + String toString()
+        + int hashCode()
+        + Factor Derivation(String)
+    }
+    interface Gneral {
+        + Gneral pow(String)
+        + Gneral multiply(Num)
+        + Gneral multiply(Gneral)
+    }
+    +class Num implements Factor {
+        - BigInteger num
+        __
+        ..constructor..
+        + Num()
+        + Num(String)
+        + Num(BigInteger)
+        + Num(Num)
+        ..operator..
+        + void add(Num)
+        + void sub(Num)
+        + Num multiply(Num)
+        + Num multiply(BigInteger)
+        + Num pow(String)
+        ..tool..
+        + int hashCode()
+        + boolean equals(object)
+        + String toString()
+        + boolean equalsStr(String)
+        ..compare..
+        + int compareTo(String)
+    }
+    +class Term implements Factor, Gneral {
+        - Num coefficient
+        - HashMap<Var, Integer> vars
+        - HashMap<Trigono, Integer> trigos
+        __
+        ..constructors..
+        + Term()
+        + Term(String)
+        + Term(Var)
+        + Term(Trigono)
+        + Term(Term)
+        ..getters..
+        + Num getCoefficient()
+        ..tool..
+        + int hashCode()
+        + boolean equals(object)
+        + boolean isNum()
+        + boolean isPowFactor()
+        + String toString()
+        ..operator..
+        + void add(Num)
+        + void sub(Num)
+        + Term multiply(Num)
+        + Term multiply(Term)
+        + Term multiply(Gneral)
+        + Term pow(String)
+        + Factor Derivation(String)
+    }
+    +class Expr implements Factor, Gneral {
+        - HashMap<Term, Num> terms
+        __
+        ..constructor..
+        + Expr()
+        + Expr(String)
+        + Expr(Expr)
+        ..operator..
+        + void add(Num)
+        + void add(Term)
+        + void add(Expr)
+        + void sub(Num)
+        + void sub(Term)
+        + void sub(Expr)
+        + Expr multiply(Gneral)
+        + Expr multiply(Num)
+        + Expr multiply(Term)
+        + Expr multiply(Expr)
+        + Expr pow(String)
+        + Factor Derivation(String)
+        ..tool..
+        + int hashCode()
+        + boolean equals(object)
+        + String toString()
+        + boolean isPowFactor()
+    }
+    +class Trigono implements Factor {
+        - String prefixName;
+        - Expr content;
+        + Trigono(String, Expr)
+        + Factor Derivation(String)
+        + Factor simplify()
+        + int hashCode()
+        + boolean minusHead()
+        + boolean equals(Object)
+        + String toString()
+    }
+    +class Var implements Factor {
+        - String varName
+        + Var(String)
+        + int hashCode()
+        + Factor Derivation(String)
+        + boolean equals(Object)
+        + String toString()
+    }
+}
+Mainclass::main ..> Lexer
+Mainclass::main ..> MyParser
+MyParser::lexer --> Lexer
+MyParser ..> Gneral
+MyParser ..> Expr
+MyParser ..> Funcall
+Lexer ..> Funsave
+Funcall --> Expr
+Funcall ..> Funsave
+Funcall::calculate ..> MyParser::parseExpr
+Expr --> Term
+Trigono --> Expr
+Term --> Num
+Term --> Trigono
+Term --> Var
+@enduml

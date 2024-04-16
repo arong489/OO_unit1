@@ -118,6 +118,9 @@ public class MyParser {
         } else if (factorString.charAt(0) == '@') {
             Funcall tmp = new Funcall(factorString.substring(1));
             lexer.next();
+            if (tmp.fullargs()) {
+                lexer.next();
+            }
             while (!tmp.fullargs()) {
                 tmp.loadFactor(parseExpr());
                 lexer.next();
